@@ -48,9 +48,9 @@ class SQLObject
   def self.all
      hashes = DBConnection.execute(<<-SQL)
       SELECT
-        cats.*
+        #{table_name}.*
       FROM
-        "#{self.table_name}"
+        #{table_name}
      SQL
 
      parse_all(hashes)
@@ -67,11 +67,11 @@ class SQLObject
   def self.find(id)
      this_cat = DBConnection.execute(<<-SQL, id)
       SELECT
-        "#{self.table_name}".*
+        #{table_name}.*
       FROM
-        "#{self.table_name}"
+        #{table_name}
       WHERE
-        "#{self.table_name}".id = ?
+        #{table_name}.id = ?
      SQL
      return nil if this_cat.empty?
      self.new(this_cat.first)
@@ -80,6 +80,7 @@ class SQLObject
   def initialize(params = {})
     columns = self.class.columns
     params.each do |attr_name, value|
+      attr_name = attr_name.to_sym
       unless columns.include?(attr_name)
         raise "unknown attribute '#{attr_name}'"
       end
@@ -87,13 +88,6 @@ class SQLObject
       self.send(setter_method, value)
     end
   end
-
-
-
-  # def favorite_band=(band)
-  #   attributes[:favorite_band] = band
-  # end
-
 
   def attribute_values
     values = []
