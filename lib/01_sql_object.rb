@@ -18,6 +18,11 @@ class SQLObject
     @columns = column_names
   end
 
+
+  def attributes
+    @attributes ||= {}
+  end
+
   def self.finalize!
     columns.each do |clm|
       define_method(clm) do
@@ -28,11 +33,6 @@ class SQLObject
         end
     end
   end
-
-  def attributes
-    @attributes ||= {}
-  end
-
 
   def self.table_name=(table_name)
     @table_name = table_name
@@ -80,15 +80,11 @@ class SQLObject
   def initialize(params = {})
     columns = self.class.columns
     params.each do |attr_name, value|
-      attr_name = attr_name.to_sym
       unless columns.include?(attr_name)
         raise "unknown attribute '#{attr_name}'"
       end
       setter_method = attr_name.to_s + '='
-      #self is instance of Cat model
       self.send(setter_method, value)
-
-      #self.send("favorite_band=", 5)
     end
   end
 
