@@ -9,11 +9,15 @@ class AssocOptions
   )
 
   def model_class
-
+    self.class_name.constantize
   end
 
   def table_name
-    # ...
+    table_name = self.class_name.downcase.pluralize
+    if table_name == "humen"
+      table_name = "humans"
+    end
+    table_name
   end
 end
 
