@@ -1,7 +1,6 @@
 require_relative '02_searchable'
 require 'active_support/inflector'
 
-# Phase IIIa
 class AssocOptions
   attr_accessor(
     :foreign_key,
@@ -10,7 +9,7 @@ class AssocOptions
   )
 
   def model_class
-    # ...
+
   end
 
   def table_name
@@ -20,7 +19,9 @@ end
 
 class BelongsToOptions < AssocOptions
   def initialize(name, options = {})
-    # ...
+    self.class_name = options[:class_name] || name.camelcase
+    self.foreign_key = options[:foreign_key] || (name.underscore).concat("_id").to_sym
+    self.primary_key = options[:primary_key] || :id
   end
 end
 
