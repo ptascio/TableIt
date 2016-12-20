@@ -99,10 +99,10 @@ class SQLObject
 
   def insert
     how_many_inserts = ["?"] * (self.class.columns.length - 1)
-    col_name = self.class.columns.drop(1).join(",")
+    col_names = self.class.columns.drop(1).join(",")
     query = <<-SQL
       INSERT INTO
-        #{self.class.table_name} (#{col_name})
+        #{self.class.table_name} (#{col_names})
       VALUES
         (#{how_many_inserts.join(",")})
     SQL
@@ -111,10 +111,23 @@ class SQLObject
   end
 
   def update
-    # ...
+    clmns = self.class.columns.drop(1)
+    clmns = clmns.map! {|attr_name| attr_name = "#{attr_name} = ?"}.join(", ")
+    DBConnection.execute(<<-SQL, *attribute_values.drop(1), id)
+      UPDATE
+        #{self.class.table_name}
+      SET
+        #{clmns}
+      WHERE
+        id = ?
+    SQL
   end
 
   def save
-    # ...
+    if self.id === nil
+      insert
+    else
+      update
+    end
   end
 end
