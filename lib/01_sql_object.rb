@@ -40,7 +40,7 @@ class SQLObject
 
   def self.table_name
     if @table_name.nil?
-      return self.to_s.downcase.tableize
+      @table_name = self.to_s.downcase.tableize
     end
     @table_name
   end
