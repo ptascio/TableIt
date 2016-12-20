@@ -1,19 +1,21 @@
 require_relative 'db_connection'
 require 'active_support/inflector'
 require 'byebug'
-# NB: the attr_accessor we wrote in phase 0 is NOT used in the rest
-# of this project. It was only a warm up.
 
 class SQLObject
 
   def self.columns
- column_names = DBConnection.execute2(<<-SQL)
-    SELECT
-      *
-    FROM
-    "#{self.table_name}"
-    SQL
-    column_names.first.map { |str| str.to_sym }
+    return @columns if @columns
+    column_names = DBConnection.execute2(<<-SQL).first
+      SELECT
+        *
+      FROM
+        #{self.table_name}
+      LIMIT
+        0
+      SQL
+    column_names.map! { |str| str.to_sym }
+    @columns = column_names
   end
 
   def self.finalize!
