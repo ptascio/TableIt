@@ -33,9 +33,9 @@ def self.find(id)
      SQL
      return nil if this_query.empty?
      self.new(this_query.first)
-  end```
+  end
 
-  ```ruby
+
   def has_many(name, options = {})
     options = HasManyOptions.new(name, self.name, options)
     define_method(name) do
