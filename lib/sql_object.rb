@@ -65,7 +65,7 @@ class SQLObject
   end
 
   def self.find(id)
-     this_cat = DBConnection.execute(<<-SQL, id)
+     this_query = DBConnection.execute(<<-SQL, id)
       SELECT
         #{table_name}.*
       FROM
@@ -73,8 +73,8 @@ class SQLObject
       WHERE
         #{table_name}.id = ?
      SQL
-     return nil if this_cat.empty?
-     self.new(this_cat.first)
+     return nil if this_query.empty?
+     self.new(this_query.first)
   end
 
   def initialize(params = {})
