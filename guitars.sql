@@ -2,9 +2,9 @@
 CREATE TABLE guitars (
   id INTEGER PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
-  player_id INTEGER,
+  musician_id INTEGER,
 
-  FOREIGN KEY(player_id) REFERENCES musician(id)
+  FOREIGN KEY(musician_id) REFERENCES musician(id)
 );
 
 CREATE TABLE musicians (
