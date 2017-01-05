@@ -1,5 +1,8 @@
 require_relative 'db_connection'
+require_relative 'associatable'
+require_relative 'searchable'
 require 'active_support/inflector'
+require 'byebug'
 
 
 class SQLObject
@@ -26,10 +29,10 @@ class SQLObject
   def self.finalize!
     columns.each do |clm|
       define_method(clm) do
-         attributes[clm]
+         self.attributes[clm]
       end
        define_method("#{clm}=".to_sym) do |arg|
-           attributes[clm] = arg
+           self.attributes[clm] = arg
         end
     end
   end
@@ -57,6 +60,7 @@ class SQLObject
   end
 
   def self.parse_all(results)
+
     all_objects = []
     results.each do |rslt|
       all_objects << self.new(rslt)
@@ -74,10 +78,19 @@ class SQLObject
         #{table_name}.id = ?
      SQL
      return nil if this_query.empty?
-     self.new(this_.first)
+     self.new(this_query.first)
+  end
+
+  def self.first
+    self.all[0]
+  end
+
+  def self.last
+    self.all[-1]
   end
 
   def initialize(params = {})
+    self.class.finalize!
     columns = self.class.columns
     params.each do |attr_name, value|
       attr_name = attr_name.to_sym
@@ -85,7 +98,9 @@ class SQLObject
         raise "unknown attribute '#{attr_name}'"
       end
       setter_method = attr_name.to_s + '='
-      self.send(setter_method, value)
+
+      self.send("#{attr_name}=", value)
+
     end
   end
 

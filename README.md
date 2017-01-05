@@ -18,7 +18,7 @@ TableIt provides these key functions for necessary querying and model associatio
 #### Associations
 
 * `belongs_to` - creates functionality for one model to be associated to another through a `foreign_key` which will match the `id` of the parent model being associated to it.
-* `has_many` - makes the possibility for one parent model to be associated with many instances of a child model. the `foreign_key` of the child model will matcht the `id` of the parent model.
+* `has_many` - makes the possibility for one parent model to be associated with many instances of a child model. the `foreign_key` of the child model will match the `id` of the parent model.
 * `has_one_through` - provides the functionality to create an association between two different models and an exisiting association. locates the associated object by going through two `belongs_to` methods.
 
 ```ruby

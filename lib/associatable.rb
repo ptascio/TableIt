@@ -1,4 +1,4 @@
-require_relative '02_searchable'
+require_relative 'searchable'
 require 'active_support/inflector'
 
 class AssocOptions
@@ -24,9 +24,9 @@ end
 
 class BelongsToOptions < AssocOptions
   def initialize(name, options = {})
-    self.class_name = options[:class_name] || name.to_s.singularize.camelcase
-    self.foreign_key = options[:foreign_key] || (name.to_s.underscore).concat("_id").to_sym
-    self.primary_key = options[:primary_key] || :id
+   self.class_name = options[:class_name] || name.to_s.singularize.camelcase
+   self.foreign_key = options[:foreign_key] || (name.to_s.underscore).concat("_id").to_sym
+   self.primary_key = options[:primary_key] || :id
   end
 end
 

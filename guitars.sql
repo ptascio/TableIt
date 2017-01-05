@@ -36,7 +36,7 @@ VALUES
   (5, "Kurt", "Rosenwinkel", 4);
 
 INSERT INTO
-  guitars (id, name, owner_id)
+  guitars (id, name, musician_id)
 VALUES
   (1, "EDS-1275", 1),
   (2, "Les Paul SG", 2),
