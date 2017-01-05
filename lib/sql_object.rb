@@ -1,6 +1,6 @@
 require_relative 'db_connection'
 require 'active_support/inflector'
-require 'byebug'
+
 
 class SQLObject
 
@@ -74,7 +74,7 @@ class SQLObject
         #{table_name}.id = ?
      SQL
      return nil if this_query.empty?
-     self.new(this_query.first)
+     self.new(this_.first)
   end
 
   def initialize(params = {})
