@@ -1,4 +1,5 @@
 require 'sqlite3'
+require 'byebug'
 
 
 PRINT_QUERIES = ENV['PRINT_QUERIES'] == 'true'
@@ -14,6 +15,7 @@ class DBConnection
     @db.type_translation = true
 
     @db
+
   end
 
   def self.reset
@@ -24,6 +26,19 @@ class DBConnection
 
     commands.each { |command| `#{command}` }
     DBConnection.open(GUITARS_DB_FILE)
+  end
+
+  def self.enter(sql_file)
+    your_sql_file = File.join(ROOT_FOLDER, sql_file)
+    db_file = File.basename(sql_file, ".sql").concat(".db")
+    your_db_file = File.join(ROOT_FOLDER, db_file)
+    commands = [
+      "rm '#{your_db_file}'",
+      "cat '#{your_sql_file}' | sqlite3 '#{your_db_file}'"
+    ]
+
+    commands.each { |command| `#{command}` }
+    DBConnection.open(your_db_file)
   end
 
   def self.instance
