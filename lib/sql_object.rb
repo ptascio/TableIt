@@ -2,8 +2,6 @@ require_relative 'db_connection'
 require_relative 'associatable'
 require_relative 'searchable'
 require 'active_support/inflector'
-require 'byebug'
-
 
 class SQLObject
 

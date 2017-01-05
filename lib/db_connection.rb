@@ -1,6 +1,4 @@
 require 'sqlite3'
-require 'byebug'
-
 
 PRINT_QUERIES = ENV['PRINT_QUERIES'] == 'true'
 # https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
