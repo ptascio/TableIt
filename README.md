@@ -10,10 +10,12 @@ TableIt provides these key functions for necessary querying and model associatio
 * `all` - returns an array of hashes of all instances of the particular model.
 * `find(id)` - returns the object which matches the queried id.
 * `initialize(params)` - instantiates an object using the passed in params.
-* `insert` - queries the database for the necessary and provides an id to the insertion.
+* `insert` - inserts a new row into the table.
 * `update` - queries the database for the necessary column(s) and updates the data associated with particular column(s).
 * `save` - returns insert or update based on whether an instance of the object already exists in the database.
 * `where(params)` - returns an instance or instances of the class which match params passed in.
+* `first` - returns the first instance of a particular model.
+* `last` - returns the most recently created instance of a particular model.
 
 #### Associations
 
