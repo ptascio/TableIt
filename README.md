@@ -21,27 +21,57 @@ TableIt provides these key functions for necessary querying and model associatio
 * `has_many` - makes the possibility for one parent model to be associated with many instances of a child model. the `foreign_key` of the child model will match the `id` of the parent model.
 * `has_one_through` - provides the functionality to create an association between two different models and an exisiting association. locates the associated object by going through two `belongs_to` methods.
 
-```ruby
-def self.find(id)
-     this_query = DBConnection.execute(<<-SQL, id)
-      SELECT
-        #{table_name}.*
-      FROM
-        #{table_name}
-      WHERE
-        #{table_name}.id = ?
-     SQL
-     return nil if this_query.empty?
-     self.new(this_query.first)
-  end
+### Using TableIt
+If you would like to use TableIt with my `sample.rb` file or your own database please follow these steps.
 
+#### Using TableIt With `sample.rb`
+**1.** Clone the repo.
+```
+git clone https://github.com/ptascio/TableIt.git
+```
 
-  def has_many(name, options = {})
-    options = HasManyOptions.new(name, self.name, options)
-    define_method(name) do
-      primary_key = self.send(options.primary_key)
-      model_class = options.model_class
-      model = model_class.where(options.foreign_key => primary_key)
-    end
-  end
-  ```
+**2.** CD into the repository. You are now in the root folder. Enter `pry` and then load `sample.rb`.
+```
+~/desktop/TableIt$ pry
+[1]pry(main)> load 'sample.rb'
+```
+
+**3.** The sample seed data contains a table of Guitars, a table of the Musicians who play them, and a table of the Companies who sponsor the Musicians to ensure they keep using their instruments. You can use the methods listed above in `Functionality` to explore these relationships.
+
+```` ruby
+
+  #find the first guitar
+  Guitar.first
+
+  #find all the guitars for a specific musician
+  Guitar.where(:musician_id => 3)
+
+  #find all of the musicians
+  Musician.all
+
+  #find a specific company by id
+  Company.find(1)
+
+  #create a new Guitar entry
+  Guitar.new(musician_id: 3, name: "Hagstrom III").save
+````
+
+#### Using TableIt With a Your Own Database
+**1.** Clone the repo.
+```
+git clone https://github.com/ptascio/TableIt.git
+```
+
+**2.** CD into the repository. You are now in the root folder. Enter `pry` and then load `lib/db_connection.rb`.
+```
+~/desktop/TableIt$ pry
+[1]pry(main)> load 'lib/db_connection.rb'
+```
+
+**3.** In order to use `DBConnection` you will need to know the full path of your `sql` file. If you don't know your file's full path simply copy your file into the root directory of TableIt.
+
+```
+[2]pry(main)> DBConnection.enter('/path/to/your_sql_file.sql')
+```
+
+**4.** You will also want something analogous to my `sample.rb` in order to set up your classes and relationships. Please note it is **highly** recommended you store this file in the root directory because you will need to `require_relative lib/sql_object.rb` at the top of your file. Unlike `sample.rb` you will **not** need `DBConnection.reset` so omit that when you create your file.
