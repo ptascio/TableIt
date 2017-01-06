@@ -71,7 +71,31 @@ git clone https://github.com/ptascio/TableIt.git
 **3.** In order to use `DBConnection` you will need to know the full path of your `sql` file. If you don't know your file's full path simply copy your file into the root directory of TableIt.
 
 ```
-[2]pry(main)> DBConnection.enter('/path/to/your_sql_file.sql')
+[2]pry(main)> DBConnection.enter('path/to/your_sql_file.sql')
 ```
 
 **4.** You will also want something analogous to my `sample.rb` in order to set up your classes and relationships. Please note it is **highly** recommended you store this file in the root directory because you will need to `require_relative lib/sql_object.rb` at the top of your file. Unlike `sample.rb` you will **not** need `DBConnection.reset` so omit that when you create your file.
+
+##### A small snippet of what your file might look like:
+
+```
+require_relative 'lib/sql_object.rb'
+
+class Book < SQLObject
+	belongs_to(
+		:author,
+		class_name: "Author",
+		foreign_key: :author_id,
+		primary_key: :id
+	)
+
+	has_one_through(:publisher, :author, :publisher)
+end
+
+class Author < SQLObject
+	has_many(
+		:books,
+		class_name: "Book",
+
+```
+etc.
