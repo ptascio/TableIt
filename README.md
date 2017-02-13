@@ -26,7 +26,7 @@ TableIt provides these key functions for necessary querying and model associatio
 ### Using TableIt
 If you would like to use TableIt with my `demo/sample.rb` file or your own database please follow these steps.
 
-#### Using TableIt With `sample.rb`
+#### Using TableIt With `demo/sample.rb`
 **1.** Clone the repo.
 ```
 git clone https://github.com/ptascio/TableIt.git
