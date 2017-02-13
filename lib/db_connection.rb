@@ -3,8 +3,7 @@ require 'sqlite3'
 PRINT_QUERIES = ENV['PRINT_QUERIES'] == 'true'
 # https://tomafro.net/2010/01/tip-relative-paths-with-file-expand-path
 ROOT_FOLDER = File.join(File.dirname(__FILE__), '..')
-GUITARS_SQL_FILE = File.join(ROOT_FOLDER, 'guitars.sql')
-GUITARS_DB_FILE = File.join(ROOT_FOLDER, 'guitars.db')
+
 
 class DBConnection
   def self.open(db_file_name)
@@ -14,16 +13,6 @@ class DBConnection
 
     @db
 
-  end
-
-  def self.reset
-    commands = [
-      "rm '#{GUITARS_DB_FILE}'",
-      "cat '#{GUITARS_SQL_FILE}' | sqlite3 '#{GUITARS_DB_FILE}'"
-    ]
-
-    commands.each { |command| `#{command}` }
-    DBConnection.open(GUITARS_DB_FILE)
   end
 
   def self.enter(sql_file)

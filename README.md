@@ -24,7 +24,7 @@ TableIt provides these key functions for necessary querying and model associatio
 * `has_one_through` - provides the functionality to create an association between two different models and an exisiting association. locates the associated object by going through two `belongs_to` methods.
 
 ### Using TableIt
-If you would like to use TableIt with my `sample.rb` file or your own database please follow these steps.
+If you would like to use TableIt with my `demo/sample.rb` file or your own database please follow these steps.
 
 #### Using TableIt With `sample.rb`
 **1.** Clone the repo.
@@ -32,10 +32,10 @@ If you would like to use TableIt with my `sample.rb` file or your own database p
 git clone https://github.com/ptascio/TableIt.git
 ```
 
-**2.** CD into the repository. You are now in the root folder. Enter `pry` and then load `sample.rb`.
+**2.** CD into the repository. You are now in the root folder. Enter `pry` and then load `demo/sample.rb`.
 ```
 ~/desktop/TableIt$ pry
-[1]pry(main)> load 'sample.rb'
+[1]pry(main)> load 'demo/sample.rb'
 ```
 
 **3.** The sample seed data contains a table of Guitars, a table of the Musicians who play them, and a table of the Companies who sponsor the Musicians to ensure they keep using their instruments. You can use the methods listed above in `Functionality` to explore these relationships.

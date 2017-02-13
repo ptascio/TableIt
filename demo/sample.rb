@@ -1,4 +1,4 @@
-require_relative 'lib/sql_object.rb'
+require_relative '../lib/sql_object.rb'
 
 class Guitar < SQLObject
   belongs_to(
@@ -37,4 +37,4 @@ end
 
 
 puts "initializing Database"
-p DBConnection.reset
+p DBConnection.enter('demo/guitars.sql')
